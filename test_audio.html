@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Audio Player</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        textarea {
+            width: 100%;
+            height: 200px;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>Test Audio Player</h1>
+    <p>Paste the base64-encoded audio string below:</p>
+    <textarea id="base64Input" placeholder="Paste the base64 audio string here..."></textarea>
+    <button onclick="playAudio()">Play Audio</button>
+    <div id="audioContainer"></div>
+    
+    <script>
+        function playAudio() {
+            const base64String = document.getElementById('base64Input').value.trim();
+            if (!base64String) {
+                alert('Please paste a base64 audio string first!');
+                return;
+            }
+            
+            // Create audio element
+            const audioContainer = document.getElementById('audioContainer');
+            audioContainer.innerHTML = ''; // Clear previous audio
+            
+            const audio = document.createElement('audio');
+            audio.controls = true;
+            audio.src = `data:audio/mp3;base64,${base64String}`;
+            
+            audioContainer.appendChild(audio);
+            
+            // Try to play
+            audio.play().catch(error => {
+                console.error('Error playing audio:', error);
+                alert('Error playing audio. Check console for details.');
+            });
+        }
+    </script>
+</body>
+</html>
